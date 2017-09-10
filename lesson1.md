@@ -206,7 +206,7 @@ We can also fetch string keys on a map using the `get` command but we will leave
 
 #### Hint: Better printing
 
-If you want to see an big map in a nicer format just use pprint 
+If you want to see an big map in a nicer format just use pprint
 
 ```clojure
 (pprint body)
@@ -276,7 +276,7 @@ Hurray, we now have the planet names. Note that we could have used an anonymous 
 (map get-name planets)
 ;; is similar to
 (map #(:name %) planets)
-;; which is a equivalent to 
+;; which is a equivalent to
 (map (fn [p] (:name p)) planets)
 ```
 
@@ -288,7 +288,7 @@ If we wanted to to get all planet names in UPPERCASE we could do:
 
 ### 3. I only want temperate weather planets
 
-Imagine that from those 10 planets I just want to fetch the planets with "temperate" climate. 
+Imagine that from those 10 planets I just want to fetch the planets with "temperate" climate.
 
 Just to get an idea, let's see all climates:
 
@@ -325,16 +325,16 @@ We can easily count them by using `count`
 ;; (3 0 0 0 1 1 11 3 3 1)
 ```
 
-One option is to use the `reduce` function. 
+One option is to use the `reduce` function.
 The reduce function applies a function against an accumulator (accum) and each element (el) in the array.
 
 Let's first use reduce to count the total number of residents in all planets. 0 is the initial accum value.
 
 ```clojure
-(reduce 
+(reduce
   (fn [accum el]
     (+ accum (count (:residents el))))
-    0 
+    0
     planets)
 ;; 23
 ```
@@ -342,12 +342,12 @@ Let's first use reduce to count the total number of residents in all planets. 0 
 If we want to make it more legible we can use let:
 
 ```clojure
-(reduce 
+(reduce
   (fn [accum el]
     (let [planet-residents (:residents el)
           n-planet-residents (count planet-residents)]
       (+ accum n-planet-residents)))
-  0 
+  0
   planets)
 ;; 23
 ```
@@ -357,7 +357,7 @@ Here we used let to give a temporary name to two intermediate calculations. The 
 Let's now change the function to return a list of vectors, where the first position of the name is the plane-name and the second one the number of planet residents.
 
 ```clojure
-(reduce 
+(reduce
   (fn [accum el]
     (let [planet-residents (:residents el)
           n-planet-residents (count planet-residents)
@@ -373,7 +373,7 @@ We have replaced the `+` function with the `cons` function. `cons` allows us to 
 But that is not good enough. What would be really useful is too have a map, where the key is the planet name, and the value is the number of residents.
 
 ```clojure
-(reduce 
+(reduce
   (fn [accum el]
     (let [planet-residents (:residents el)
           n-planet-residents (count planet-residents)
@@ -426,7 +426,7 @@ So lets add these functions to the file:
   []
   (let [response (clj-http.client/get "https://swapi.co/api/planets")
         body (cheshire.core/parse-string (:body response) true)]
-        (:results body))) 
+        (:results body)))
 
 (defn get-temperate-planets-names
   []
@@ -443,13 +443,13 @@ So lets add these functions to the file:
 
 (defn get-planet-population
   []
-  (reduce 
+  (reduce
     (fn [accum el]
       (let [planet-residents (:residents el)
             n-planet-residents (count planet-residents)
             planet-name (:name el)]
         (assoc accum planet-name n-planet-residents)))
-    {} 
+    {}
     (get-planets)))
 ```
 
@@ -485,7 +485,7 @@ Then restart the repl, load the file again and see, everything still works.
 We normally also configure the project to indicate where are the src files locates. So change the `build.boot` file to be like this:
 
 ```clojure
-(set-env!  
+(set-env!
   :resource-paths #{"src"}
   :dependencies '[[clj-http "3.6.1"] [cheshire "5.7.1"]])
 ```
@@ -526,7 +526,7 @@ Just add this to the start of the `sw_planets.clj` file.
 (ns sw-planets)
 ```
 
-We can now load the file, and start to use the `sw-planets` namespace to call the functions. 
+We can now load the file, and start to use the `sw-planets` namespace to call the functions.
 
 ```clojure
 (load-file "src/sw_planets.clj")
@@ -575,7 +575,7 @@ Final `src/sw_planets.clj` file:
   []
   (let [response (http/get "https://swapi.co/api/planets")
         body (json/parse-string (:body response) true)]
-    (:results body))) 
+    (:results body)))
 
 (defn get-temperate-planets-names
   []
@@ -591,20 +591,22 @@ Final `src/sw_planets.clj` file:
 
 (defn get-planet-population
   []
-  (reduce 
+  (reduce
     (fn [accum el]
       (let [planet-residents (:residents el)
             n-planet-residents (count planet-residents)
             planet-name (:name el)]
         (assoc accum planet-name n-planet-residents)))
-    {} 
+    {}
     (get-planets)))
 ```
 
 Final `build.boot` file:
 
 ```clojure
-(set-env!  
+(set-env!
   :resource-paths #{"src"}
   :dependencies '[[clj-http "3.6.1"] [cheshire "5.7.1"]])
 ```
+
+The final result can be seen in [github](https://github.com/joninvski/clojure-tutorial/tree/master/lesson1).
