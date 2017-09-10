@@ -1,4 +1,4 @@
-# Clojure tutorial (Lesson 1)
+# Clojure tutorial (Lesson 2)
 
 ## Web server
 
@@ -6,9 +6,11 @@
 
 Let's first install the yada library
 
-(set-env!  
+```clojure
+(set-env!
   :resource-paths #{"src"}
   :dependencies '[[yada "1.2.6"]])
+```
 
 And require it:
 
@@ -78,7 +80,7 @@ Let's add a parameter that indicates the name of the person to be greeted.
                {:produces "text/plain"
                 :parameters {:query {:name String}} ;; We will receive name as a query param
                 :response (fn [ctx]
-                            (format "Hello %s. How are you?" 
+                            (format "Hello %s. How are you?"
                                     (-> ctx :parameters :query :name)))}}})]
       {:port 3000}))
 ```
@@ -87,7 +89,7 @@ The response is not a function that receives a context `ctx`, and then creates a
 Note that the `->` macro is to help the readability of the code.
 
 ```
-(def ctx {:parameters 
+(def ctx {:parameters
            {:query
              {:name "value"}}})
 
@@ -107,10 +109,10 @@ If you now run `curl -i http://localhost:3000/` you will get a:
 It seems we are missing the name query parameter. Let's run `curl -i http://localhost:3000/\?name\=john`
 
 ```
-Hello john. How are you?% 
+Hello john. How are you?%
 ```
 
-Yada is automatically validating the parameters and returning the appropriate error when parameters is missing.
+Yada is automatically validating the parameters and returning the appropriate error when parameter is missing.
 
 ### 3. Serving star wars
 
@@ -131,30 +133,59 @@ We need to bring the `sw-planets.clj` and `build.boot` file from lesson one and 
     └── web_server.clj
 ```
 
-Don't forget to add the yada dependency to `build.boot` and create a `web_server.clj`
+First don't forget to add the yada dependency to `build.boot`.
+
+```clojure
+(set-env!
+  :resource-paths #{"src"}
+  :dependencies '[[clj-http "3.6.1"]
+                  [cheshire "5.7.1"]
+                  [yada "1.2.6"]])
+```
+
+And on the web_server.clj we add the two endpoints, and create functions for the yada resources (*get-planets-resource* and *get-population-resource*)
 
 ```clojure
 (ns web-server
-  (:require [yada.yada :as yada]))
+  (:require [yada.yada :as yada]
+            [sw-planets]))
 
-(defn sw-planet-api [db]
-  ["/phonebook"
-     [["" (-> (new-index-resource db)
-                 (assoc :id ::index))]
-                     [["/" :entry] (-> (new-entry-resource db)
-                                           (assoc :id ::entry))]]])
- 
-(def svr
-  (yada/listener
-    ["/" (yada/resource
-           {:methods
-            {:get
-             {:produces "text/plain"
-              :response "Hello World!"}}})]
-    {:port 3000}))
+(defn sw-planet-api []
+  ["/api/sw/planets"
+   [
+    ["" (get-planets-resource)]
+    ["/population" (get-population-resource)]]])
+
+(defn start []
+  (def svr
+    (yada/listener
+      (sw-planet-api)
+      {:port 3000})))
 ```
 
+Now to define the resources:
+
+```clojure
+(defn get-planets-resource []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :response (sw-planets/get-planets)}}}))
+
+(defn get-population-resource []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :parameters {:query {:planet-name String}} ;; We will receive name as a query param
+       :response (fn [ctx]
+                  (let [planet-name (-> ctx :parameters :query :planet-name)]
+                    (get (sw-planets/get-planet-population) planet-name)))}}}))
+```
 
 ### 4. Manage web-server (state) with component
 
 
+
+The final result can be seen in [github](https://github.com/joninvski/clojure-tutorial/tree/master/lesson2).
