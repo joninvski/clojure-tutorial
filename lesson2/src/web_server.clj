@@ -1,5 +1,6 @@
 (ns web-server
   (:require [yada.yada :as yada]
+            [com.stuartsierra.component :as component]
             [sw-planets]))
 
 (defn get-planets-resource []
@@ -7,7 +8,8 @@
     {:methods
      {:get
       {:produces "text/plain"
-       :response (sw-planets/get-planets)}}}))
+       :response (fn [ctx]
+                   (sw-planets/get-planets))}}}))
 
 (defn get-population-resource []
   (yada/resource
@@ -25,15 +27,25 @@
     ["" (get-planets-resource)]
     ["/population" (get-population-resource)]]])
 
-(defn start []
-  (def svr
-    (yada/listener 
-      (sw-planet-api)
-      {:port 3000})))
+(defn create-web-server [port]
+ (yada/listener 
+    (sw-planet-api)
+    {:port port}))
 
-(defn stop []
- ((:close svr)))
+(defn stop [server]
+ ((:close server)))
 
-(defn restart []
- (stop)
- (start))
+(defrecord WebServer [port web-server]
+  component/Lifecycle
+
+  (start [component]
+    (println ";; starting webserver")
+    (let [server (create-web-server port)]
+      (assoc component :web-server server)))
+  (stop [component]
+    (println ";; stopping webserver")
+    (stop (:web-server component))
+    (assoc component :web-server nil)))
+
+(defn new-web-server [port]
+  (map->WebServer {:port port}))

@@ -186,6 +186,74 @@ Now to define the resources:
 
 ### 4. Manage web-server (state) with component
 
+To be easy to creaate and stop our webserver, lets create some helper function on web_server.clj
 
+```clojure
+(defn create-web-server[]
+ (yada/listener 
+    (sw-planet-api)
+    {:port 3305}))
+
+(defn stop [server]
+ ((:close server)))
+```
+
+Note that the `create-web-server` function returns the parameter needed for the stop function.
+
+Now let's try to "plug" this web-server into [Stuart Sierra's components library](https://github.com/stuartsierra/component).
+Components has the objecting of managing the lifecycle and dependencies of software components which have runtime state.
+
+Let's first create the component lyfecycle rules for the webserver component (still in `web_server.clj` file):
+
+```clojure
+(defn create-web-server [port]
+ (yada/listener 
+    (sw-planet-api)
+    {:port port}))
+
+(defn stop [server]
+ ((:close server)))
+
+(defrecord WebServer [port web-server]
+  component/Lifecycle
+
+  (start [component]
+    (println ";; starting webserver")
+    (let [server (create-web-server port)]
+      (assoc component :web-server server)))
+  (stop [component]
+    (println ";; stopping webserver")
+    (stop (:web-server component))
+    (assoc component :web-server nil)))
+
+(defn new-web-server [port]
+  (map->WebServer {:port port}))
+```
+
+Then we can create a file that will be responsible to manage all the "components" that make up the system. Let's create `main.clj`.
+
+```clojure
+(ns main.clj
+  (:require [com.stuartsierra.component :as component]
+            [web-server]))
+
+(defn system-map [config]
+  (component/system-map 
+    :http (web-server/new-web-server (:port config))))
+
+(defn start-all []
+  (def system (component/start (system-map {:port 3500}))))
+
+(defn stop-all []
+  (component/stop system))
+```
+
+Let's break down the code. First we need to indicate what are the components that compose our systems. This is what `system-map` does. We say that we have a single component (:http) and we tell it how to call the corresponding component/Lifecycle.
+
+Then the `component/start` and `component/stop` do all the magic. They go through the system-map, and for each component sees it's dependencies (none for now) and initializes components in the correct order (currently it is easy as we have only one).
+
+The `component/stop` method does the inverse functionality (again respecting dependencies).
+
+For now this is quite simple and there is no real benefit. We only have one component. But as we add more the component/system abstraction will start to pay off.
 
 The final result can be seen in [github](https://github.com/joninvski/clojure-tutorial/tree/master/lesson2).
