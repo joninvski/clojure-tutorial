@@ -102,7 +102,7 @@ Note: if you see `Address already in use` you need to stop the server before sta
 
 If you now run `curl -i http://localhost:3000/` you will get a:
 
-```json
+```clojure
 {:status 400, :errors ([:query {:error {:name missing-required-key}}])}
 ```
 
