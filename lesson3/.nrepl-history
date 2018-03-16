@@ -1,0 +1,493 @@
+(start-all)
+(ns main.clj
+  (:require [com.stuartsierra.component :as component]
+            [web-server]))
+(defn system-map [config]
+  (component/system-map 
+    :http (web-server/new-web-server (:port config))))
+(defn start-all []
+  (def system (component/start (system-map {:port 3500}))))
+(defn stop-all []
+  (component/stop system))
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(ns web-server
+  (:require [yada.yada :as yada]
+            [com.stuartsierra.component :as component]
+            [clojure.core.async :as async]))
+(stop-all)
+(ns main.clj)
+(start-all)
+(stop-all)
+(start-all)
+(async
+)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(stop-all)
+(start-all)
+(require '(yada [yada :as yada]))
+(require '(clojure.core [async :as async]))
+async
+(require '(clojure.core [async :as :b]))
+(require '(clojure.core [async :as b]))
+b
+(require '[clojure.core.async :as b])
+b
+(ns manel)
+(require '[clojure.core.async :as b])
+b
+b/channel
+clojure.core.async
+clojure.core.async/chan
+b/chan
+(require '[clojure.core.async :as async])
+async/chann
+async/chan
+(println (<! my-channel))
+(def my-channel (async/chan 1))
+(println (<! my-channel))
+(println (async/<! my-channel))
+(println (async/<!! my-channel))
+(>!! my-channel 'hello')
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(def my-channel (async/chan))
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(async/>!! my-channel 'hello')
+(println (async/<!! my-channel))
+(go (println (async/<!! my-channel)))
+(async/go (println (async/<!! my-channel)))
+(async/>!! my-channel 'hello')
+(async/>!! my-channel "hello\n")
+(async/go (println (async/<!! my-channel)))
+jj(async/>!! my-channel "hello\n")
+(async/>!! my-channel "hello\n")
+(def my-channel (async/chan 1))
+(async/>!! my-channel "hello\n")
+(async/go (println (async/<!! my-channel)))
+(async/>!! my-channel "hello\n")
+(async/go (println (async/<!! my-channel)))
+(println (async/<!! my-channel)
+(async/>!! my-channel "hello\n")
+(println (async/<!! my-channel)
+)
+(println (async/<!! my-channel))
+(async/>!! my-channel "hello\n")
+(println (async/<!! my-channel))
+(async/>!! my-channel "hello\n")
+(println (async/<!! my-channel))
+(def my-channel (async/chan 1))
+(println (async/<!! my-channel))
+(async/>!! my-channel "hello\n")
+(println (async/<!! my-channel))
+(async/<!! my-channel)
+(async/>!! my-channel "hello\n")
+(async/<!! my-channel)
+(go (println (async/<!! my-channel)))
+(async/go (println (async/<!! my-channel)))
+(async/>!! my-channel "hello\n")
+(async/go (while true (println (async/<!! my-channel))))
+(async/>!! my-channel "hello\n")
+(def my-channel (async/chan 1))
+(thread (println (async/<!! my-channel)))
+(async/thread (println (async/<!! my-channel)))
+(async/>!! my-channel "hello\n")
+(def my-channel (async/chan))
+(async/thread (println (async/<!! my-channel)))
+(async/>!! my-channel "hello\n")
+(def my-channel (async/chan))
+(async/thread (while true (println (async/<!! my-channel))))
+(async/>!! my-channel "hello\n")
+(def my-channel (async/chan))
+(async/>!! my-channel "hello\n")
+(thread (async/>!! my-channel "hello\n"))
+(async/thread (async/>!! my-channel "hello\n"))
+(println (async/<!! my-channel))
+(while true (println (async/<!! my-channel)))
+(async/thread (while true (println (async/<!! my-channel))))
+(async/>!! my-channel "hello\n")
+(require '[clojure.core.async :as async])
+(def my-channel (async/chan))
+(async/>!! my-channel "hello\n")
+# asd
+)
+% asd
+(async/thread (async/>!! my-channel "hello world"))
+(print "asd")
+(println "asd")
+(println (async/<!! my-channel))
+(async/thread
+  (while true (println (async/<!! my-channel))))
+(async/>!! my-channel "More hello\n")
+(doseq [x (range 1 100)]
+ (async/thread))
+(doseq [x (range 1 10000)]
+ (async/thread))
+(doseq [x (range 1 10000)]
+ (println x)
+ (async/thread))
+(doseq [x (range 1 100000)]
+ (println x)
+ (async/thread))
+(doseq [x (range 1 100000)]
+ (println x)
+ (async/thread
+  (while true (println (async/<!! my-channel)))))
+(require '[clojure.core.async :as async])
+(doseq [x (range 1 100000)]
+ (println x)
+ (async/thread
+  (while true (Thread/sleep 10000))))
+(def my-channel (async/chan))
+(go 
+  (while true
+    (println (async/<!! my-channel))))
+(require '[clojure.core.async :as async])
+(async/go 
+  (while true
+    (println (async/<!! my-channel))))
+(async/go 
+  (while true
+    (println (async/<! my-channel))))
+(def my-channel (async/chan))
+(async/go 
+  (while true
+    (println (async/<!! my-channel))))
+(async/>!! my-channel "More hello\n")
+(def my-channel (async/chan))
+(async/go 
+  (while true
+    (println (async/<!! my-channel))))
+(async/>!! my-channel "More hello\n")(async/>!! my-channel "More hello\n")
+(async/>!! my-channel "More hello\n")
+(async/go 
+  (while true
+    (println (async/<! my-channel))))
+    
+(async/>! my-channel "More hello")
+(async/go 
+  (while true
+    (println (async/<! my-channel))))
+    
+(go (async/>! my-channel "More hello"))
+(def my-channel (async/chan))
+;; using <!! is incorrect here, we will see why in a minute
+(async/go 
+  (while true
+    (println (async/<! my-channel))))
+    
+(async/go (async/>! my-channel "More hello"))
+(doseq [x (range 1 100000)]
+ (println x)
+ (async/go
+  (while true (Thread/sleep 10000))))
+(def c (chan))
+(def c (async/chan))
+(go
+  (async/>! c "X")
+  (async/>! c "Y")
+  (async/>! c "Z"))
+(def c (async/chan))
+(async/go
+  (async/>! c "X")
+  (async/>! c "Y")
+  (async/>! c "Z"))
+(def consumer-1 
+  (async/go (println "1. Consumer 1" (async/<! c)))
+  (async/go (println "2. Consumer 1" (async/<! c)))
+  (async/go (println "3. Consumer 1" (async/<! c))))
+(def consumer-1 
+  (do
+   (async/go (println "1. Consumer 1" (async/<! c)))
+   (async/go (println "2. Consumer 1" (async/<! c)))
+   (async/go (println "3. Consumer 1" (async/<! c)))))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(defn consumer [n]
+   (async/go (println n ". Consumer 1" (async/<! c)))
+   (async/go (println n ". Consumer 1" (async/<! c))))
+(consumer)
+(consumer 1)
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(def c (async/chan))
+(defn consumer [n]
+   (async/go (println n ". Consumer 1" (async/<! c)))
+   (async/go (println n ". Consumer 1" (async/<! c))))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(println n ". Consumer 1" (async/<!! c))
+(println 1 ". Consumer 1" (async/<!! c))
+  (async/>! c "Item 1")
+  (async/>!! c "Item 1")
+(println 1 ". Consumer 1" (async/<!! c))
+(require '[clojure.core.async :as async])
+(def c (async/chan))
+(async/go (println n ". Consumer 1" (async/<!! c)))
+   (async/go (println 1 ". Consumer 1" (async/<!! c)))
+  (async/>!! c "Item 1")
+(def c (async/chan))
+(defn consumer [n]
+   (async/go (println 1 ". Consumer 1" (async/<!! c)))
+   (async/go (println n ". Consumer 1" (async/<! c)))
+   (async/go (println n ". Consumer 1" (async/<! c))))
+(defn consumer [n]
+   (async/go (println n ". Consumer 1" (async/<! c)))
+   (async/go (println n ". Consumer 1" (async/<! c))))
+(consumer)
+(consumer 1)
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(def c (async/chan))
+(defn consumer [n]
+   (async/go (println "Consumer" n (async/<! c)))
+   (async/go (println "Consumer" n (async/<! c))))
+(consumer 1)
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(def c (async/chan))
+(def c-mult (mult c))
+(def tap1 (tap c-mult (chan)))
+(def tap2 (tap c-mult (chan)))
+(defn consumer [n tap]
+   (async/go (println "Consumer" n (async/<! c)))
+   (async/go (println "Consumer" n (async/<! c))))
+   
+(consumer 1 tap1)
+(consumer 2 tap2)
+  
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(def c (async/chan))
+(def c-mult (async/mult c))
+(def tap1 (async/tap c-mult (async/chan)))
+(def tap2 (async/tap c-mult (async/chan)))
+(defn consumer [n tap]
+   (async/go (println "Consumer" n (async/<! c)))
+   (async/go (println "Consumer" n (async/<! c))))
+   
+(consumer 1 tap1)
+(consumer 2 tap2)
+  
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(async/go
+  (async/>! c "Item 1")
+  (async/>! c "Item 2")
+  (async/>! c "Item 3"))
+(consumer 1 tap1)
+(consumer 2 tap2)
+(ns web-server
+  (:require [yada.yada :as yada]
+            [com.stuartsierra.component :as component]
+            [clojure.core.async :as async]))
+            
+(defn get-new []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :response (fn [ctx]
+                    "Hello world!")}}}))
+            
+(defn new-api []
+  ["/api/new"
+   [
+    ["" (get-new)]]])
+            
+(defrecord WebServer [port web-server]
+  component/Lifecycle
+  (start [component]
+    (println ";; starting webserver")
+    (let [server (create-web-server port)]
+      (assoc component :web-server server)))
+  (stop [component]
+    (println ";; stopping webserver")
+    (stop (:web-server component))
+    (assoc component :web-server nil)))
+(defn new-web-server [port]
+  (map->WebServer {:port port}))
+(defn get-new []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :response (fn [ctx]
+                    "Hello world!")}}}))
+            
+(defn new-api []
+  ["/api/new"
+   [
+    ["" (get-new)]]])
+    
+(defn create-web-server [port]
+ (yada/listener 
+    (new-api)
+    {:port port}))
+            
+(defrecord WebServer [port web-server]
+  component/Lifecycle
+  (start [component]
+    (println ";; starting webserver")
+    (let [server (create-web-server port)]
+      (assoc component :web-server server)))
+  (stop [component]
+    (println ";; stopping webserver")
+    (stop (:web-server component))
+    (assoc component :web-server nil)))
+(defn new-web-server [port]
+  (map->WebServer {:port port}))
+(defn new-api []
+  ["/api/new"
+   [
+    ["" (get-new)]]])
+    
+(defn stop [server]
+ ((:close server)))
+    
+(defn create-web-server [port]
+ (yada/listener 
+    (new-api)
+    {:port port}))
+            
+(defrecord WebServer [port web-server]
+  component/Lifecycle
+  (start [component]
+    (println ";; starting webserver")
+    (let [server (create-web-server port)]
+      (assoc component :web-server server)))
+  (stop [component]
+    (println ";; stopping webserver")
+    (stop (:web-server component))
+    (assoc component :web-server nil)))
+(defn new-web-server [port]
+  (map->WebServer {:port port}))
+(start
+)
+(def server (start 3000))    
+(def server (create-web-server 3000))    
+(stop server)
+(def channel (async/chan 2))
+(defn get-sse []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/event-stream"
+       :response (fn [ctx]
+                   (async/tap mult (async/chan 2)))}}}))
+(def mult (async/mult channel))
+(defn get-sse []
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/event-stream"
+       :response (fn [ctx]
+                   (async/tap mult (async/chan 2)))}}}))
+(defn new-api []
+  ["/api/new"
+   [
+    ["" (get-new)]
+    ["/sse" (get-sse)]]])
+(async/thread (while true
+        (Thread/sleep 2000)
+        (async/put! channel "Hello there")))
+(def server (create-web-server 3000))    
+(async/thread (doseq [x (range 1 1000)
+        (Thread/sleep 2000)
+        (async/put! channel "Hello there")))
+(async/thread
+  (doseq [x (range 1 1000)
+     (Thread/sleep 2000)
+     (async/put! channel "Hello there")))
+(async/thread
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/put! channel "Hello there")))
+(async/thread
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/put! channel "Hello there" x)))
+(async/thread
+  (doseq [x (range 1 1000)]
+     (do 
+     (Thread/sleep 2000)
+     (async/put! channel "Hello there" x))))
+(async/thread
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/put! channel (str "Hello there" x))))
+(async/thread
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/put! channel (str "Hello there -> " x))))
+(async/go
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/>! channel (str "Hello there -> " x))))
+(async/go
+  (doseq [x (range 1 1000)]
+     (Thread/sleep 2000)
+     (async/>! channel (str "!!!Hello there -> " x))))
