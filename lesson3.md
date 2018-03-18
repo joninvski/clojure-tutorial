@@ -101,7 +101,7 @@ Yep all is still working. But we can do better, we can use what makes `go` block
 This allow the thread to be relieved to work on other tasks in the mean time, never having to be stuck.
 
 The same logic that applies to `<!!` also applies to `>!!`. In a go block you should use `>!`.
-```
+```clojure
 (def my-channel (async/chan))
 
 ;; using <!! is incorrect here, we will see why in a minute
@@ -114,7 +114,7 @@ The same logic that applies to `<!!` also applies to `>!!`. In a go block you sh
 
 And if you are curious of how many go blocks you can create: 
 
-```
+```clojure
 ;; this will break your REPL
 (doseq [x (range 1 100000)]
  (println x)
@@ -129,6 +129,7 @@ Note that go blocks internally use a thread pool with a very limited number of t
 Channels are a very flexible abstraction. One of the interesting things you can do with them is "multiply" them.
 
 Let's the the following example:
+
 ```clojure
 (def c (async/chan))
 
@@ -148,7 +149,7 @@ Now imagine we have two consumers and both want to receive **all** items. In our
 
 It is for these use cases that the `mult` and `tap` functions exist.
   
-``` 
+```clojure 
 (def c (async/chan))
 (def c-mult (async/mult c))
 
