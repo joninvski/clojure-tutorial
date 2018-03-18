@@ -88,7 +88,7 @@ Let's add a parameter that indicates the name of the person to be greeted.
 The response is not a function that receives a context `ctx`, and then creates a string with the name passed as a query parameter.
 Note that the `->` macro is to help the readability of the code.
 
-```
+```clojure
 (def ctx {:parameters
            {:query
              {:name "value"}}})
