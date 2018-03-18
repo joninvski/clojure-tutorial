@@ -64,7 +64,9 @@ Find by Name: (find-name "part-of-name-here")
 boot.user=>
 ```
 
-### 3. Evaluate your first s-expressions. Write
+### 3. Evaluate your first s-expressions.
+
+On the repl write:
 
 ```clojure
 (+ 1 2)
