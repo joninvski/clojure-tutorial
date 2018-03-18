@@ -46,7 +46,7 @@ boot repl
 
 You should see something similar to (the port number will be different):
 
-```clojure
+```
 nREPL server started on port 42495 on host 127.0.0.1 - nrepl://127.0.0.1:42495
 REPL-y 0.3.7, nREPL 0.2.12
 Clojure 1.7.0
@@ -120,7 +120,7 @@ We can now make the request
 
 And we get as a result the http result
 
-### 3. Store the request result and play a little bit with it
+### 3. Store the request result and play with it
 
 ```clojure
 (def response (clj-http.client/get "https://swapi.co/api/planets/1/"))
@@ -131,6 +131,8 @@ If we write
 
 ```clojure
 response
+
+;; {:request-time 549, :repeatable? false, :protocol-version ...}
 ```
 
 We see the string. Let's see what this response is
@@ -139,7 +141,7 @@ We see the string. Let's see what this response is
 (class response)
 ```
 
-It indicates it is a `clojure.lang.PersistentHashMap`. A map is a structure that links keys to values. So we can ask if for the keys:
+It indicates it is a `clojure.lang.PersistentHashMap`. A map is a structure that links keys to values. So we can ask it for the keys:
 
 ```clojure
 (keys response)
@@ -363,7 +365,7 @@ Let's now change the function to return a list of vectors, where the first posit
           n-planet-residents (count planet-residents)
           planet-name (:name el)]
       (cons [planet-name n-planet-residents] accum)))
-  [] ;; initial value is not an empty list
+  [] ;; Initial value is an empty list
   planets)
 ;; (["Geonosis" 1] ["Kamino" 3] ["Coruscant" 3] ["Naboo" 11] ["Endor" 1] ["Bespin" 1] ["Dagobah" 0] ["Hoth" 0] ["Yavin IV"])
 ```
