@@ -1,10 +1,25 @@
 # Clojure tutorial (Lesson 2)
 
+* [Objective](#objective)
+* [Prerequisites](#prerequisites)
+* [Web server](#web-server)
+  * [Respond to GET](#1-respond-to-get)
+  * [Personalized greeting](#2-personalized-greeting)
+  * [Serving star wars](#3-serving-star-wars)
+  * [Manage web-server (state) with component](#4-manage-web-server-state-with-component)
+
+## Objective
+Learn how to set up a web server in clojure ([Yada](https://github.com/juxt/yada)) and how to use [Stuart Sierra's Component](https://github.com/juxt/yada) framework.
+
+## Prerequisites
+
+1. If you never touched clojure doing [lesson1](https://github.com/joninvski/clojure-tutorial/blob/master/lesson1.md) first should prove useful.
+
 ## Web server
 
 #### 1. Respond to GET
 
-Let's first install the yada library
+Let's first install the [yada](https://github.com/juxt/yada) library:
 
 ```clojure
 (set-env!
@@ -186,7 +201,7 @@ Now to define the resources:
 
 ### 4. Manage web-server (state) with component
 
-To be easy to creaate and stop our webserver, lets create some helper function on web_server.clj
+To be easy to create and stop our webserver, lets create some helper function on web_server.clj
 
 ```clojure
 (defn create-web-server[]
@@ -203,7 +218,7 @@ Note that the `create-web-server` function returns the parameter needed for the 
 Now let's try to "plug" this web-server into [Stuart Sierra's components library](https://github.com/stuartsierra/component).
 Components has the objecting of managing the lifecycle and dependencies of software components which have runtime state.
 
-Let's first create the component lyfecycle rules for the webserver component (still in `web_server.clj` file):
+Let's first create the component lifecycle rules for the webserver component (still in `web_server.clj` file):
 
 ```clojure
 (defn create-web-server [port]
