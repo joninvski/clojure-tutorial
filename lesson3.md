@@ -1,5 +1,20 @@
 # Clojure tutorial (Lesson 3)
 
+* [Objective](#objective)
+* [Prerequisites](#prerequisites)
+* [Channels](#channels)
+  * [Go blocks](#go-blocks)
+  * [Mult](#mult)
+* [Using channels to provide SSE (Server Sent Event)](#using-channels-to-provide-sse-server-sent-event)
+
+## Objective
+Learn learn about the basic build blocks to do asynchronous programming in clojure.
+
+## Prerequisites
+
+1. If you never touched clojure doing [lesson 1](https://github.com/joninvski/clojure-tutorial/blob/master/lesson1.md) first should prove useful.
+2. This tutorial will build on top of the examples of [lesson 2](https://github.com/joninvski/clojure-tutorial/blob/master/lesson2.md) but its not mandatory if you only want to understand the concepts.
+
 ## Channels 
 
 A channel is similar to a Unix pike. You produce something on one side, and someone in the other side can consume it. Channels in clojure are part of the library `clojure.core.async` that you can require like this:
@@ -33,7 +48,7 @@ We can now consume what is in the channel using the `<!!` function.
 
 Note that `<!!` is also blocking, so if there is nothing to consume it will be blocked until someone adds something to the channel.
 
-What we can do, is to create an eternal loop that will consume whatever is in the channel and print it. We will put in a thread so we can free out REPL to add values to the channel.
+What we can do, is to create an eternal loop that will consume whatever is in the channel and print it. We will put in a thread so we can free out the REPL to add values to the channel.
 
 ```clojure
 (async/thread
@@ -52,7 +67,7 @@ Now we need to understand some of the limitations of what we just did. First of 
   (while true (Thread/sleep 10000))))
 ```
 
-On my on the 10263 thread the REPL breaks but on your computer the value will be different.
+On my laptop the REPL breaks when reaching the 10263 thread but on your computer the value will be different.
 
 ```clojure
 10262
@@ -98,13 +113,13 @@ Let's try to replace the `thread` function with `go` and see if it still works:
 ```
 
 Yep all is still working. But we can do better, we can use what makes `go` blocks so useful. If we replace `<!!` by `<!`, we are not going to block if no value exists to be consumed, but we are going to **park**. Park means that the thread does not need to get stuck waiting for the value to be received. It can do other work and when it has something to consume, it will proceed.
-This allow the thread to be relieved to work on other tasks in the mean time, never having to be stuck.
+This allows the thread to be relieved to work on other tasks in the mean time, never having to be stuck.
 
 The same logic that applies to `<!!` also applies to `>!!`. In a go block you should use `>!`.
 ```clojure
 (def my-channel (async/chan))
 
-;; using <!! is incorrect here, we will see why in a minute
+;; using <! allows our go block to "share" the underlying thread with other go blocks
 (async/go 
   (while true
     (println (async/<! my-channel))))
@@ -173,7 +188,7 @@ It is for these use cases that the `mult` and `tap` functions exist.
 
 ## Using channels to provide SSE (Server Sent Event)
 
-Let's assume we start with a baseline setup in similar to lesson 2.
+Let's assume we start with a baseline setup in similar to [lesson 2](https://github.com/joninvski/clojure-tutorial/blob/master/lesson2.md).
 
 ```clojure
 (ns web-server
